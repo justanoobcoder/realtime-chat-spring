@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realtime Chat</title>
+    <link rel="stylesheet" href="css/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@5.0.0/bundles/stomp.umd.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="js/index.js"></script>
+</head>
+<body>
+    <div>
+        <h1>Realtime Chat</h1>
+        <div>
+            <input id="username" type="text" name="username" placeholder="Enter username">
+            <input id="message" type="text" name="message" placeholder="Enter message">
+            <button id="send-btn">Send</button>
+        </div>
+        <div>
+            <ul id="chat-list">
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
