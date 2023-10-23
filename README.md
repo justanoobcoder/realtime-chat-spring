@@ -21,3 +21,4 @@ Open brower with url `http://127.0.0.1:5500`, open more browsers to test that ch
 ## To do
 - [ ] Chat one-to-one
 - [ ] Create chat group, invite user to group
+- [ ] Use database to save messages
