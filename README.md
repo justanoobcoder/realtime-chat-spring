@@ -7,7 +7,7 @@ This is a simple real-time chat application using Spring Boot Websocket
 
 ## How to use
 ### With Docker
-Simply run command `docker compose up -d`, then open browser with url `http://127.0.0.1:5500`, open more browsers to test that chat app.
+Simply run command `docker compose up -d`, then open browser with url `http://127.0.0.1:5500`, open more browsers to test the chat app.
 
 Run `docker compose down` to stop the app.
 
