@@ -1,7 +1,7 @@
 package com.chat.server.controller;
 
-import com.chat.server.model.ChatMessageRequest;
-import com.chat.server.model.ChatMessageResponse;
+import com.chat.server.viewmodel.ChatMessageRequest;
+import com.chat.server.viewmodel.ChatMessageResponse;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;

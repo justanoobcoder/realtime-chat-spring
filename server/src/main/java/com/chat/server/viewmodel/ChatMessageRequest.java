@@ -1,4 +1,4 @@
-package com.chat.server.model;
+package com.chat.server.viewmodel;
 
 import lombok.*;
 
