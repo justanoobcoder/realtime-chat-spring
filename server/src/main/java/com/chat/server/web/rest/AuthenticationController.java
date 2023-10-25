@@ -1,4 +1,4 @@
-package com.chat.server.controller;
+package com.chat.server.web.rest;
 
 import com.chat.server.service.AuthenticationService;
 import com.chat.server.viewmodel.auth.LoginPostRequest;

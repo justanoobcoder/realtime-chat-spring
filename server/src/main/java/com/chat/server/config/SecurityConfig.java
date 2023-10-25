@@ -36,10 +36,10 @@ public class SecurityConfig {
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
             .authorizeHttpRequests(authorize -> authorize
                 .dispatcherTypeMatchers(FORWARD, ERROR).permitAll()
+                .requestMatchers(PathRequest.toH2Console()).permitAll()
                 .requestMatchers(mvc.pattern("/api/auth/**")).permitAll()
                 .requestMatchers(mvc.pattern("/websocket")).permitAll()
-                .requestMatchers(PathRequest.toH2Console()).permitAll()
-                .anyRequest().permitAll()
+                .anyRequest().denyAll()
             )
             .headers(headers -> headers
                 .frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)

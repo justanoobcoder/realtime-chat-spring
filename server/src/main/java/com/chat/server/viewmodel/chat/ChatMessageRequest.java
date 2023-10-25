@@ -1,13 +1,12 @@
-package com.chat.server.viewmodel;
+package com.chat.server.viewmodel.chat;
 
 import lombok.*;
 
-@Setter
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ChatMessageResponse {
-    private String sender;
+public class ChatMessageRequest {
     private String content;
 }
