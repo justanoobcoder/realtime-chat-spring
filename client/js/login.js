@@ -2,7 +2,6 @@
 const socketUrl = 'ws://localhost:8080/websocket';
 const publicChatTopicPath = '/user/queue/chat/public';
 const publicChatPath = '/app/chat/public';
-//const url = 'http://localhost:8080';
 const loginPath = '/api/auth/login';
 const token = localStorage.getItem('token');
 const currentUser = JSON.parse(localStorage.getItem('currentUser'));
