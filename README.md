@@ -1,9 +1,18 @@
 # Real-time chat application
 This is a simple real-time chat application using Spring Boot Websocket
 
+## Screenshots
+![Pic1](https://raw.githubusercontent.com/justanoobcoder/realtime-chat-spring/main/screenshots/screenshot-01.png)
+
 ## Technologies
-- Server: Spring Boot, Websocket with Stomp
-- Client: HTML, JavaScript, JQuery, StompJs
+- Server: Spring Boot, WebSocket with Stomp
+- Client: HTML, JavaScript, JQuery, AJAX, StompJS
+- Database: In-memory H2 database
+
+## Features
+- Register
+- Login
+- Real-time chat
 
 ## How to use
 ### With Docker
