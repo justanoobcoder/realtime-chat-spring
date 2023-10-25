@@ -1,6 +1,7 @@
 const url = 'http://localhost:8080';
 
 $(function() {
+	// set up event listeners
 	$('#login').click(() => {
 		$('#login-card').attr('hidden', false);
 		$('#register-card').attr('hidden', true);
@@ -13,6 +14,7 @@ $(function() {
 });
 
 function register() {
+	// get data from form
 	const fullName = $('#register-fullname').val();
 	const username = $('#register-username').val();
 	const password = $('#register-password').val();
@@ -25,6 +27,7 @@ function register() {
 		avatarUrl,
 	};
 
+	// send register request to server
 	$.ajax({
 		url: url + '/api/auth/register',
 		type: 'POST',
