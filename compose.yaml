@@ -1,5 +1,6 @@
 services:
   client:
+    container_name: chat-client
     build:
       context: ./client
       dockerfile: Dockerfile
@@ -7,6 +8,7 @@ services:
       - 5500:80
   
   server:
+    container_name: chat-server
     build:
       context: ./server
       dockerfile: Dockerfile
