@@ -21,6 +21,7 @@ public class JwtService {
 
     public JwtService(JwtProperties jwtProperties) {
         this.jwtProperties = jwtProperties;
+        // Create the JWT builder and parser using the secret key
         SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtProperties.getSecretKey()));
         jwtBuilder = Jwts.builder()
                 .signWith(key);
@@ -29,10 +30,12 @@ public class JwtService {
     }
 
     public String createToken(Authentication authentication) {
+        // Get the username and role from the authentication object
         String username = authentication.getName();
         String role = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .findAny().orElse("ROLE_ANONYMOUS");
+        // Create then return the token
         Date expiration = new Date(System.currentTimeMillis() + jwtProperties.getExpirationInMilliseconds());
         return jwtBuilder
                 .subject(username)
@@ -43,9 +46,11 @@ public class JwtService {
     }
 
     public Authentication getAuthentication(String token) {
+        // Get the username and role from the token
         Claims claims = jwtParser.parseSignedClaims(token).getPayload();
         String username = claims.getSubject();
         String role = claims.get("role", String.class);
+        // Create then return the authentication object with the username, token, and role
         var authorities = List.of(new SimpleGrantedAuthority(role));
         return new UsernamePasswordAuthenticationToken(username, token, authorities);
     }

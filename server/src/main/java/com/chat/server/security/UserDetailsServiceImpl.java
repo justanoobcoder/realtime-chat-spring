@@ -19,6 +19,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        // Get the account from the database and create a UserDetails object from it.
+        // The UserDetails object is used by Spring Security to authenticate the user.
         var account = accountRepository.findByUsername(username);
         return account.map(this::createUserDetails)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));

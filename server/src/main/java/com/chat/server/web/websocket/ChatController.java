@@ -27,7 +27,10 @@ public class ChatController {
 
     @MessageMapping("/public")
     public void publicChat(@Payload ChatMessageRequest message, Principal principal) {
+        // Get sender account
         var account = accountService.getByUsername(principal.getName());
+
+        // Create chat response
         LocalDateTime date = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
         String time = date.format(formatter);
@@ -38,6 +41,7 @@ public class ChatController {
             .time(time)
             .build();
 
+        // Send to all subscribers except the sender
         List<String> subscribers = simpUserRegistry.getUsers().stream()
             .map(SimpUser::getName)
             .filter(name -> !name.equals(principal.getName()))
