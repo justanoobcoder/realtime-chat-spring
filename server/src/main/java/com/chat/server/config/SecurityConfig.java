@@ -2,47 +2,49 @@ package com.chat.server.config;
 
 import com.chat.server.security.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
+
+import static jakarta.servlet.DispatcherType.ERROR;
+import static jakarta.servlet.DispatcherType.FORWARD;
 
 @RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-
-    private final String[] AUTH_WHITELIST = {
-            "/api/auth/**"
-    };
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(12);
-    }
+    private final MvcRequestMatcher.Builder mvc;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        // @formatter:off
         http
-                .csrf(AbstractHttpConfigurer::disable)
-                .cors(CustomCorsConfig::new)
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .authorizeHttpRequests(
-                        authorize -> authorize
-                                .requestMatchers(AUTH_WHITELIST).permitAll()
-                                .anyRequest().authenticated()
-                );
-
+            .csrf(csrf -> csrf
+                .ignoringRequestMatchers(PathRequest.toH2Console())
+                .disable()
+            )
+            .cors(CustomCorsConfig::new)
+            .sessionManagement(AbstractHttpConfigurer::disable)
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+            .authorizeHttpRequests(authorize -> authorize
+                .dispatcherTypeMatchers(FORWARD, ERROR).permitAll()
+                .requestMatchers(mvc.pattern("/api/auth/**")).permitAll()
+                .requestMatchers(mvc.pattern("/websocket")).permitAll()
+                .requestMatchers(PathRequest.toH2Console()).permitAll()
+                .anyRequest().permitAll()
+            )
+            .headers(headers -> headers
+                .frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)
+            );
+        // @formatter:on
         return http.build();
     }
 }

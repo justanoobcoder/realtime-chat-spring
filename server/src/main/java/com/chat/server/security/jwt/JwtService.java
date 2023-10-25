@@ -9,26 +9,22 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.List;
 
-@RequiredArgsConstructor
-@Service
+@Component
 public class JwtService {
-    @Value("${app.security.auth.jwt.secret-key}")
-    private String secretKey;
-
-    @Value("${app.security.auth.jwt.expiration-in-milliseconds}")
-    private long expirationInMilliseconds;
-
+    private final JwtProperties jwtProperties;
     private final JwtBuilder jwtBuilder;
     private final JwtParser jwtParser;
 
-    public JwtService() {
-        SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey));
+    public JwtService(JwtProperties jwtProperties) {
+        this.jwtProperties = jwtProperties;
+        SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtProperties.getSecretKey()));
         jwtBuilder = Jwts.builder()
                 .signWith(key);
         jwtParser = Jwts.parser()
@@ -40,7 +36,7 @@ public class JwtService {
         String role = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .findAny().orElse("ROLE_ANONYMOUS");
-        Date expiration = new Date(System.currentTimeMillis() + expirationInMilliseconds);
+        Date expiration = new Date(System.currentTimeMillis() + jwtProperties.getExpirationInMilliseconds());
         return jwtBuilder
                 .subject(username)
                 .claim("role", role)

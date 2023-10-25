@@ -1,6 +1,8 @@
 package com.chat.server.controller;
 
 import com.chat.server.service.AuthenticationService;
+import com.chat.server.viewmodel.auth.LoginPostRequest;
+import com.chat.server.viewmodel.auth.LoginPostResponse;
 import com.chat.server.viewmodel.auth.RegisterPostRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,5 +21,11 @@ public class AuthenticationController {
     public ResponseEntity<Void> register(@RequestBody RegisterPostRequest request) {
         authenticationService.register(request);
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginPostResponse> login(@RequestBody LoginPostRequest request) {
+        LoginPostResponse response = authenticationService.login(request);
+        return ResponseEntity.ok(response);
     }
 }
