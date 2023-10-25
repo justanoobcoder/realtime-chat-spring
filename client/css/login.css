@@ -2,7 +2,7 @@ a {
   text-decoration: none;
 }
 
-#card {
+.white-card {
   background: #fbfbfb;
   border-radius: 8px;
   box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.65);
@@ -11,11 +11,11 @@ a {
   width: 329px;
 }
 
-#card-content {
+.card-content {
   padding: 12px 44px;
 }
 
-#card-title {
+.card-title {
   font-family: "Raleway Thin", sans-serif;
   letter-spacing: 4px;
   padding-bottom: 23px;

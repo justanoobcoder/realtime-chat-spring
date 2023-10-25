@@ -2,7 +2,7 @@
 const socketUrl = 'ws://localhost:8080/websocket';
 const publicChatTopicPath = '/user/queue/chat/public';
 const publicChatPath = '/app/chat/public';
-const url = 'http://localhost:8080';
+//const url = 'http://localhost:8080';
 const loginPath = '/api/auth/login';
 const token = localStorage.getItem('token');
 const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -26,7 +26,7 @@ stompClient.onWebSocketClose = function () {
 $(function () {
 	// check if user is logged in
 	if (token && currentUser) {
-		$('#card').attr('hidden', true);
+		$('#login-card').attr('hidden', true);
 		$('#chat-area').attr('hidden', false);
 	}
 
@@ -71,7 +71,7 @@ function login() {
 			localStorage.setItem('currentUser', JSON.stringify(data.account));
 
 			// hide login card and show chat area
-			$('#card').attr('hidden', true);
+			$('#login-card').attr('hidden', true);
 			$('#chat-area').attr('hidden', false);
 			$('#msg-chat-box').scrollTop($('#msg-chat-box')[0].scrollHeight);
 			$('#login-username').val('');
@@ -85,7 +85,7 @@ function login() {
 
 		},
 		error: (err) => {
-			console.log(err);
+			alert('Login fail');
 		}
 	});
 }
@@ -97,7 +97,7 @@ function logout() {
 	localStorage.removeItem('currentUser');
 
 	// hide chat area and show login card
-	$('#card').attr('hidden', false);
+	$('#login-card').attr('hidden', false);
 	$('#chat-area').attr('hidden', true);
 	$('#message').val('');
 }

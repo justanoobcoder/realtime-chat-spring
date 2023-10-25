@@ -15,15 +15,48 @@
   <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@5.0.0/bundles/stomp.umd.min.js"></script>
   <link rel="stylesheet" href="css/chat.css">
   <link rel="stylesheet" href="css/login.css">
+  <link rel="stylesheet" href="css/register.css">
+  <script src="js/register.js"></script>
   <script src="js/login.js"></script>
   <script src="js/chat.js"></script>
 </head>
 
 <body>
   <div class="container-fluid h-100 d-flex justify-content-center">
-    <div id="card">
-      <div id="card-content">
-        <div id="card-title">
+    <div class="white-card" id="register-card" hidden>
+      <div class="card-content">
+        <div class="card-title">
+          <h2>REGISTER</h2>
+        </div>
+        <div class="form">
+          <label for="register-fullname" style="padding-top:5px">
+            &nbsp;Full Name
+          </label>
+          <input id="register-fullname" class="form-content" required />
+          <div class="form-border"></div>
+          <label for="register-username" style="padding-top:22px">
+            &nbsp;Username
+          </label>
+          <input id="register-username" class="form-content" required />
+          <div class="form-border"></div>
+          <label for="register-password" style="padding-top:22px">&nbsp;Password
+          </label>
+          <input id="register-password" class="form-content" type="password" required />
+          <div class="form-border"></div>
+          <label for="register-avatar" style="padding-top:22px">
+            &nbsp;Avatar URL
+          </label>
+          <input id="register-avatar" class="form-content" required />
+          <div class="form-border"></div>
+          <input id="register-btn" type="submit" name="submit" value="REGISTER" />
+          <a href="#" id="login">Already have an account? Login</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="white-card" id="login-card">
+      <div class="card-content">
+        <div class="card-title">
           <h2>LOGIN</h2>
         </div>
         <div class="form">
