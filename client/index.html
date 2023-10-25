@@ -1,26 +1,284 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Realtime Chat</title>
-    <link rel="stylesheet" href="css/index.css">
-    <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@5.0.0/bundles/stomp.umd.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script src="js/index.js"></script>
+  <title>Chat</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+    integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+  <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@5.0.0/bundles/stomp.umd.min.js"></script>
+  <link rel="stylesheet" href="css/chat.css">
+  <link rel="stylesheet" href="css/login.css">
+  <script src="js/login.js"></script>
+  <script src="js/chat.js"></script>
 </head>
+
 <body>
-    <div>
-        <h1>Realtime Chat</h1>
-        <div>
-            <input id="username" type="text" name="username" placeholder="Enter username">
-            <input id="message" type="text" name="message" placeholder="Enter message">
-            <button id="send-btn">Send</button>
+  <div class="container-fluid h-100 d-flex justify-content-center">
+    <div id="card">
+      <div id="card-content">
+        <div id="card-title">
+          <h2>LOGIN</h2>
         </div>
-        <div>
-            <ul id="chat-list">
-            </ul>
+        <div class="form">
+          <label for="login-username" style="padding-top:5px">
+            &nbsp;Username
+          </label>
+          <input id="login-username" class="form-content" required />
+          <div class="form-border"></div>
+          <label for="login-password" style="padding-top:22px">&nbsp;Password
+          </label>
+          <input id="login-password" class="form-content" type="password" required />
+          <div class="form-border"></div>
+          <input id="login-btn" type="submit" name="submit" value="LOGIN" />
+          <a href="#" id="signup">Don't have account yet?</a>
         </div>
+      </div>
     </div>
+
+    <div class="row justify-content-center h-100" hidden id="chat-area">
+      <div class="col-md-4 col-xl-3 chat">
+        <div class="card mb-sm-3 mb-md-0 contacts_card">
+          <div class="card-header">
+            <div class="input-group">
+              <input type="text" placeholder="Search..." name="" class="form-control search">
+              <div class="input-group-prepend">
+                <span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
+              </div>
+            </div>
+          </div>
+          <div class="card-body contacts_body">
+            <ui class="contacts">
+              <li class="active">
+                <div class="d-flex bd-highlight">
+                  <div class="img_cont">
+                    <img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/users_relation.png"
+                      class="rounded-circle user_img">
+                    <span class="online_icon"></span>
+                  </div>
+                  <div class="user_info">
+                    <span>Public Group</span>
+                    <div class="short-msg">
+                      <p>Bye, see you</p>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="d-flex bd-highlight">
+                  <div class="img_cont">
+                    <img
+                      src="https://imgv3.fotor.com/images/gallery/girl-anime-avatar-with-brown-hair-made-in-fotor-anime-avatar-maker.jpg"
+                      class="rounded-circle user_img">
+                    <span class="online_icon offline"></span>
+                  </div>
+                  <div class="user_info">
+                    <span>Taherah Big</span>
+                    <div class="short-msg">
+                      <p>I am good too, thank you for your chat template</p>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="d-flex bd-highlight">
+                  <div class="img_cont">
+                    <img src="https://avatarfiles.alphacoders.com/715/71560.jpg" class="rounded-circle user_img">
+                    <span class="online_icon"></span>
+                  </div>
+                  <div class="user_info">
+                    <span>Sami Rafi</span>
+                    <div class="short-msg">
+                      <p>I am good too, thank you for your chat template</p>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="d-flex bd-highlight">
+                  <div class="img_cont">
+                    <img src="https://avatarfiles.alphacoders.com/715/71560.jpg" class="rounded-circle user_img">
+                    <span class="online_icon"></span>
+                  </div>
+                  <div class="user_info">
+                    <span>Sami Rafi</span>
+                    <div class="short-msg">
+                      <p>I am good too, thank you for your chat template</p>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="d-flex bd-highlight">
+                  <div class="img_cont">
+                    <img src="https://avatarfiles.alphacoders.com/715/71560.jpg" class="rounded-circle user_img">
+                    <span class="online_icon"></span>
+                  </div>
+                  <div class="user_info">
+                    <span>Sami Rafi</span>
+                    <div class="short-msg">
+                      <p>I am good too, thank you for your chat template</p>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="d-flex bd-highlight">
+                  <div class="img_cont">
+                    <img
+                      src="https://play-lh.googleusercontent.com/2-Mw1u0zRRb8bbe-AQe_MPIMqk_8MBT9ojoVZL3FER0HAYwJpq6KW4Ebg3AYbuS0dw"
+                      class="rounded-circle user_img">
+                    <span class="online_icon offline"></span>
+                  </div>
+                  <div class="user_info">
+                    <span>Nargis Hawa</span>
+                    <div class="short-msg">
+                      <p>I am good too, thank you for your chat template</p>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="d-flex bd-highlight">
+                  <div class="img_cont">
+                    <img src="https://pic1.mangapicgallery.com/r/essay/81/md_/1548331_14709851.jpeg"
+                      class="rounded-circle user_img">
+                    <span class="online_icon offline"></span>
+                  </div>
+                  <div class="user_info">
+                    <span>Rashid Samim</span>
+                    <div class="short-msg">
+                      <p>I am good too, thank you for your chat template</p>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ui>
+          </div>
+          <div class="card-footer"></div>
+        </div>
+      </div>
+      <div class="col-md-8 col-xl-6 chat">
+        <div class="card">
+          <div class="card-header msg_head">
+            <div class="d-flex bd-highlight">
+              <div class="img_cont">
+                <img id="receiver-avatar" src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/users_relation.png" class="rounded-circle user_img">
+                <span class="online_icon"></span>
+              </div>
+              <div class="user_info">
+                <span id="receiver-name">Public Group</span>
+                <p>Online</p>
+              </div>
+            </div>
+            <span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
+            <div class="action_menu">
+              <ul>
+                <li><i class="fas fa-user-circle"></i> View profile</li>
+                <li><i class="fas fa-users"></i> Add to close friends</li>
+                <li><i class="fas fa-plus"></i> Add to group</li>
+                <li><i class="fas fa-ban"></i> Block</li>
+              </ul>
+            </div>
+          </div>
+          <div class="card-body msg_card_body" id="msg-chat-box">
+            <!-- <div class="d-flex justify-content-start mb-4">
+              <div class="img_cont_msg">
+                <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
+                  class="rounded-circle user_img_msg">
+              </div>
+              <div class="msg_container">
+                Hi, how are you samim?
+                <span class="msg_time">8:40 AM, Today</span>
+              </div>
+            </div>
+            <div class="d-flex justify-content-end mb-4">
+              <div class="msg_container my-msg">
+                Hi Khalid i am good tnx how about you?
+                <span class="msg_time_send">8:55 AM, Today</span>
+              </div>
+              <div class="img_cont_msg">
+                <img src="https://img.freepik.com/premium-photo/anime-male-avatar_950633-956.jpg"
+                  class="rounded-circle user_img_msg">
+              </div>
+            </div>
+            <div class="d-flex justify-content-start mb-4">
+              <div class="img_cont_msg">
+                <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
+                  class="rounded-circle user_img_msg">
+              </div>
+              <div class="msg_container">
+                I am good too, thank you for your chat template
+                <span class="msg_time">9:00 AM, Today</span>
+              </div>
+            </div>
+            <div class="d-flex justify-content-end mb-4">
+              <div class="msg_container my-msg">
+                You are welcome
+                <span class="msg_time_send">9:05 AM, Today</span>
+              </div>
+              <div class="img_cont_msg">
+                <img src="https://img.freepik.com/premium-photo/anime-male-avatar_950633-956.jpg"
+                  class="rounded-circle user_img_msg">
+              </div>
+            </div>
+            <div class="d-flex justify-content-start mb-4">
+              <div class="img_cont_msg">
+                <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
+                  class="rounded-circle user_img_msg">
+              </div>
+              <div class="msg_container">
+                I am looking for your next templates I am looking for your next templates I am looking for your next
+                templates I am looking for your next templates I am looking for your next templates I am looking for
+                your next templates
+                <span class="msg_time">9:07 AM, Today</span>
+              </div>
+            </div>
+            <div class="d-flex justify-content-end mb-4">
+              <div class="msg_container my-msg">
+                Ok, thank you have a good day
+                <span class="msg_time_send">9:10 AM, Today</span>
+              </div>
+              <div class="img_cont_msg">
+                <img src="https://img.freepik.com/premium-photo/anime-male-avatar_950633-956.jpg"
+                  class="rounded-circle user_img_msg">
+              </div>
+            </div>
+            <div class="d-flex justify-content-start mb-4">
+              <div class="img_cont_msg">
+                <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
+                  class="rounded-circle user_img_msg">
+              </div>
+              <div class="msg_container">
+                Bye, see you
+                <span class="msg_time">9:12 AM, Today</span>
+              </div>
+            </div> -->
+          </div>
+          <div class="card-footer">
+            <div class="input-group">
+              <div class="input-group-append">
+                <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
+              </div>
+              <input id="message" class="form-control type_msg" placeholder="Type your message..."></input>
+              <div class="input-group-append" id="send-btn">
+                <span class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></span>
+              </div>
+            </div>
+          </div>
+          <div>
+              <button id="logout-btn" class="btn btn-danger float-right mb-2 mr-2">Logout</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
+
 </html>
