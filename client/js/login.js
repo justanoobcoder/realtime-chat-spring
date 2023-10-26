@@ -64,11 +64,22 @@ function login() {
 function logout() {
 	// disconnect from websocket, remove token and current user from local storage
 	stompClient.deactivate();
-	localStorage.removeItem('token');
-	localStorage.removeItem('currentUser');
 
-	// hide chat area and show login card
-	$('#login-card').attr('hidden', false);
-	$('#chat-area').attr('hidden', true);
-	$('#message').val('');
+	let accessToken = localStorage.getItem('token');
+	$.ajax({
+		url: url + logoutPath,
+		type: 'POST',
+		headers: {
+			'Authorization': 'Bearer ' + accessToken,
+		},
+		success: (data) => {
+			localStorage.removeItem('token');
+			localStorage.removeItem('currentUser');
+		
+			// hide chat area and show login card
+			$('#login-card').attr('hidden', false);
+			$('#chat-area').attr('hidden', true);
+			$('#message').val('');
+		},
+	});
 }
