@@ -22,7 +22,7 @@ public class ApiExceptionHandler {
         return servletRequest.getRequest().getServletPath();
     }
 
-    private ResponseEntity<ErrorVm> getErrorVmResponseEntity(HttpStatus status, WebRequest request, ApiException ex) {
+    private ResponseEntity<ErrorVm> getErrorVmResponseEntity(HttpStatus status, WebRequest request, Exception ex) {
         String message = ex.getMessage();
         ErrorVm errorVm = new ErrorVm(status.value(), status.getReasonPhrase(), message);
         log.warn(ERROR_LOG_FORMAT, this.getServletPath(request), status.value(), message);
