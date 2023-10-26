@@ -17,7 +17,12 @@ stompClient.onConnect = (frame) => {
 	stompClient.subscribe(publicChatTopicPath, publicSubscribe);
 };
 
-stompClient.onWebSocketClose = function () {
+stompClient.onStompError = (frame) => {
+	console.log('Error: ' + frame);
+	logout();
+}
+
+stompClient.onWebSocketClose = () => {
 	console.log('Connection closed');
 };
 
@@ -56,6 +61,8 @@ function sendMessage() {
 	$('.msg_card_body').append(myMsgElement);
 	$('#message').val('');
 	$('#msg-chat-box').scrollTop($('#msg-chat-box')[0].scrollHeight);
+
+	$('#public-short-msg').text(message);
 }
 
 function publicSubscribe(payload) {
@@ -75,4 +82,6 @@ function publicSubscribe(payload) {
 </div>`;
 	$('.msg_card_body').append(otherMsgElement);
 	$('#msg-chat-box').scrollTop($('#msg-chat-box')[0].scrollHeight);
+
+	$('#public-short-msg').text(data.content);
 }
