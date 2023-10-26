@@ -25,7 +25,7 @@ Run `docker compose down` to stop the app.
 
 **Start client**: go to `client/` folder, open this folder using Visual Studio Code with [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) extension.
 
-Open brower with url `http://127.0.0.1:5500`, open more browsers to test that chat app.
+Open brower with url `http://127.0.0.1:5500`, open more browsers to test the chat app.
 
 ## To do
 - [ ] Chat one-to-one
