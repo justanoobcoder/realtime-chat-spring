@@ -1,8 +1,12 @@
 // set up
 const socketUrl = 'ws://localhost:8080/websocket';
+const publicNewUserTopicPath = '/topic/users/new-user';
+const publicUserLoginTopicPath = '/topic/users/login';
+const publicUserLogoutTopicPath = '/topic/users/logout';
 const publicChatTopicPath = '/user/queue/chat/public';
 const publicChatPath = '/app/chat/public';
 const loginPath = '/api/auth/login';
+const logoutPath = '/api/auth/logout';
 const token = localStorage.getItem('token');
 const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
@@ -14,7 +18,10 @@ const stompClient = new StompJs.Client({
 
 stompClient.onConnect = (frame) => {
 	console.log('Connected: ' + frame);
-	stompClient.subscribe(publicChatTopicPath, publicSubscribe);
+	stompClient.subscribe(publicNewUserTopicPath, newUserSubscribe);
+	stompClient.subscribe(publicUserLoginTopicPath, userLoginSubscribe);
+	stompClient.subscribe(publicUserLogoutTopicPath, userLogoutSubscribe);
+	stompClient.subscribe(publicChatTopicPath, publicChatSubscribe);
 };
 
 stompClient.onStompError = (frame) => {
@@ -27,16 +34,16 @@ stompClient.onWebSocketClose = () => {
 };
 
 $(function () {
-  $('#action_menu_btn').click(() => $('.action_menu').toggle());
+	$('#action_menu_btn').click(() => $('.action_menu').toggle());
 });
 
 function connectToChat(accessToken) {
-  $('#msg-chat-box').scrollTop($('#msg-chat-box')[0].scrollHeight);
-  // set authorization header and connect to websocket
-  stompClient.connectHeaders = {
-    Authorization: 'Bearer ' + accessToken,
-  };
-  stompClient.activate();
+	$('#msg-chat-box').scrollTop($('#msg-chat-box')[0].scrollHeight);
+	// set authorization header and connect to websocket
+	stompClient.connectHeaders = {
+		Authorization: 'Bearer ' + accessToken,
+	};
+	stompClient.activate();
 }
 
 function sendMessage() {
@@ -47,8 +54,8 @@ function sendMessage() {
 
 	// send message to server
 	stompClient.publish({ destination: publicChatPath, body: JSON.stringify(payload) });
-	let myMsgElement = 
-	`<div class="d-flex justify-content-end mb-4">
+	let myMsgElement =
+		`<div class="d-flex justify-content-end mb-4">
 			<div class="msg_container my-msg">
 				${message}
 				<span class="msg_time_send">08:56 PM, Today</span>
@@ -65,21 +72,51 @@ function sendMessage() {
 	$('#public-short-msg').text(message);
 }
 
-function publicSubscribe(payload) {
-	console.log(payload);
+function newUserSubscribe(payload) {
 	const data = JSON.parse(payload.body);
-	console.log(data);
-	let otherMsgElement = 
-	`<div class="d-flex justify-content-start mb-4">
-	<div class="img_cont_msg">
-		<img src="${data.avatarUrl}"
-			class="rounded-circle user_img_msg">
-	</div>
-	<div class="msg_container">
-		${data.content}
-		<span class="msg_time">8:40 AM, Today</span>
-	</div>
-</div>`;
+	let newContactElement =
+		`<li>
+			<div class="d-flex bd-highlight">
+				<div class="img_cont">
+					<img
+						src="${data.avatarUrl}"
+						class="rounded-circle user_img">
+					<span class="online_icon offline" id="${data.username}"></span>
+				</div>
+				<div class="user_info">
+					<span>${data.fullName}</span>
+					<div class="short-msg">
+						<p></p>
+					</div>
+				</div>
+			</div>
+		</li>`;
+	$('.contacts').append(newContactElement);
+}
+
+function userLoginSubscribe(payload) {
+	const data = JSON.parse(payload.body);
+	$('#' + data.username).removeClass('offline');
+}
+
+function userLogoutSubscribe(payload) {
+	const data = JSON.parse(payload.body);
+	$('#' + data.username).addClass('offline');
+}
+
+function publicChatSubscribe(payload) {
+	const data = JSON.parse(payload.body);
+	let otherMsgElement =
+		`<div class="d-flex justify-content-start mb-4">
+			<div class="img_cont_msg">
+				<img src="${data.avatarUrl}"
+					class="rounded-circle user_img_msg">
+			</div>
+			<div class="msg_container">
+				${data.content}
+				<span class="msg_time">8:40 AM, Today</span>
+			</div>
+		</div>`;
 	$('.msg_card_body').append(otherMsgElement);
 	$('#msg-chat-box').scrollTop($('#msg-chat-box')[0].scrollHeight);
 
