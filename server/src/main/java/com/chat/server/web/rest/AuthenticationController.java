@@ -43,11 +43,13 @@ public class AuthenticationController {
 
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(Principal principal) {
-        var account = accountService.getByUsername(principal.getName());
-        var response = new AccountGetResponse(account.getId(), account.getUsername(),
-            account.getFullName(), account.getAvatarUrl());
-        // Notify all users that a user has been logged out
-        simpMessagingTemplate.convertAndSend("/topic/users/logout", response);
+        if (principal != null) {
+            var account = accountService.getByUsername(principal.getName());
+            var response = new AccountGetResponse(account.getId(), account.getUsername(),
+                account.getFullName(), account.getAvatarUrl());
+            // Notify all users that a user has been logged out
+            simpMessagingTemplate.convertAndSend("/topic/users/logout", response);
+        }
         return ResponseEntity.ok().build();
     }
 }
