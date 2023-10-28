@@ -92,16 +92,40 @@ function newUserSubscribe(payload) {
 			</div>
 		</li>`;
 	$('.contacts').append(newContactElement);
+	let notifyMsg = 
+		`<div class="d-flex justify-content-center mt-2 mb-2">
+			<div class="notify-msg">
+				${data.fullName} has joined the group!
+			</div>
+	  </div>`;
+	$('.msg_card_body').append(notifyMsg);
+	$('#msg-chat-box').scrollTop($('#msg-chat-box')[0].scrollHeight);
 }
 
 function userLoginSubscribe(payload) {
 	const data = JSON.parse(payload.body);
 	$('#' + data.username).removeClass('offline');
+	let notifyMsg = 
+		`<div class="d-flex justify-content-center mt-2 mb-2">
+			<div class="notify-msg">
+				${data.fullName} is online!
+			</div>
+	  </div>`;
+	$('.msg_card_body').append(notifyMsg);
+	$('#msg-chat-box').scrollTop($('#msg-chat-box')[0].scrollHeight);
 }
 
 function userLogoutSubscribe(payload) {
 	const data = JSON.parse(payload.body);
 	$('#' + data.username).addClass('offline');
+	let notifyMsg = 
+		`<div class="d-flex justify-content-center mt-2 mb-2">
+			<div class="notify-msg">
+				${data.fullName} is offline!
+			</div>
+	  </div>`;
+	$('.msg_card_body').append(notifyMsg);
+	$('#msg-chat-box').scrollTop($('#msg-chat-box')[0].scrollHeight);
 }
 
 function publicChatSubscribe(payload) {
@@ -113,6 +137,7 @@ function publicChatSubscribe(payload) {
 					class="rounded-circle user_img_msg">
 			</div>
 			<div class="msg_container">
+				<span class="msg-sender-name">${data.sender}</span>
 				${data.content}
 				<span class="msg_time">8:40 AM, Today</span>
 			</div>
