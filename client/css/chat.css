@@ -264,3 +264,13 @@ html {
     margin-bottom: 15px !important;
   }
 }
+
+.notify-msg {
+  color: white;
+}
+
+.msg-sender-name {
+  display: block;
+  color: black;
+  font-weight: 500;
+}
